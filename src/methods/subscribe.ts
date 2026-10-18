@@ -130,6 +130,14 @@ export default async function subscribe(
     const pubnub = new PubNub({
       subscribeKey: this.config.pnSubKey,
       userId: `pn-${this.config.augustId.toUpperCase()}`,
+      // Keep the classic subscription manager. PubNub 11 made its "event
+      // engine" the default, and that engine gives up after a few failed
+      // reconnects and then waits for the app to call reconnect() - which
+      // nothing here does - so a long outage would end lock events for good.
+      // The classic manager keeps retrying until the network comes back, and
+      // it is the one that sends the PNReconnectedCategory status that
+      // onPubNubStatus() listeners rely on.
+      enableEventEngine: false,
     })
     state = {
       pubnub,

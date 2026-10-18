@@ -395,3 +395,24 @@ describe('onPubNubStatus', () => {
     expect(a).not.toHaveBeenCalled()
   })
 })
+
+describe('subscribe method - connection recovery', () => {
+  beforeEach(() => {
+    mockPubNubInstances.length = 0
+  })
+
+  /**
+   * PubNub 11 switched to an "event engine" that stops retrying after a few
+   * failed reconnects and never sends PNReconnectedCategory. Lock events would
+   * end for good after a long outage, so the classic manager has to be asked
+   * for explicitly.
+   */
+  it('asks PubNub for the classic subscription manager, which keeps reconnecting', async () => {
+    const PubNub = (await import('pubnub')).default as any
+    const august = makeFakeAugust()
+    await subscribe.call(august, 'lock-1', vi.fn(), true)
+
+    expect(PubNub).toHaveBeenLastCalledWith(expect.objectContaining({ enableEventEngine: false }))
+    tearDownPubNub(august)
+  })
+})
