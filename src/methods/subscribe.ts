@@ -198,7 +198,9 @@ export default async function subscribe(
   if (!callbacks) {
     callbacks = new Set()
     state.subscriptions.set(channel, callbacks)
-    state.pubnub.subscribe({ channels: [channel] })
+    state.pubnub.subscribe({
+      channels: [channel],
+    })
   }
   callbacks.add(callback)
 
@@ -221,7 +223,9 @@ export default async function subscribe(
     if (currentCallbacks.size === 0) {
       currentState.subscriptions.delete(channel)
       try {
-        currentState.pubnub.unsubscribe({ channels: [channel] })
+        currentState.pubnub.unsubscribe({
+          channels: [channel],
+        })
       } catch {
         // Best-effort; channel may already be unsubscribed
       }

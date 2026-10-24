@@ -20,7 +20,9 @@ const semver = {
   // Return prerelease identifiers array or null
   prerelease(v) {
     const m = v.match(/^\d+\.\d+\.\d+-(.+)$/)
-    return m ? m[1].split('.') : null
+    return m
+      ? m[1].split('.')
+      : null
   },
   // Compare two semver strings in reverse order (for rcompare use)
   rcompare(a, b) {
@@ -91,7 +93,9 @@ if (!refArgument) {
 function getTagVersionFromNpm(baseVersion, tag) {
   try {
     return JSON.parse(child_process.execSync(`npm info ${packageJSON.name} versions --json`).toString('utf8').trim())
-      .filter(v => (tag === 'latest' ? v === baseVersion : v.startsWith(`${baseVersion}-${tag}.`)))
+      .filter(v => (tag === 'latest'
+        ? v === baseVersion
+        : v.startsWith(`${baseVersion}-${tag}.`)))
       .reduce((_, current) => current, '')
   } catch (e) {
     console.error(`Failed to query the npm registry for the latest version for tag: ${tag}`, e)

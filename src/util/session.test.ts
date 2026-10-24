@@ -27,7 +27,10 @@ afterEach(() => {
 describe('session util', () => {
   describe('happy paths', () => {
     it('returns headers with cached token if already authenticated', async () => {
-      const a = fakeAugust({ token: 'cached', fetch: vi.fn() })
+      const a = fakeAugust({
+        token: 'cached',
+        fetch: vi.fn(),
+      })
       const headers = await session.call(a) as any
       expect(headers['x-august-access-token']).toBe('cached')
       // No fetch should happen when a token is already present.
@@ -57,7 +60,9 @@ describe('session util', () => {
       const p2 = session.call(a)
 
       expect(fetchFn).toHaveBeenCalledOnce()
-      resolveFetch({ headers: { 'x-august-access-token': 'TOK' } })
+      resolveFetch({
+        headers: { 'x-august-access-token': 'TOK' },
+      })
       await Promise.all([p1, p2])
       expect(fetchFn).toHaveBeenCalledOnce()
     })
@@ -77,7 +82,10 @@ describe('session util', () => {
       const a = fakeAugust({ token: null, fetch: fetch1 })
       const b = fakeAugust({ token: null, fetch: fetch2 })
 
-      await Promise.all([session.call(a), session.call(b)])
+      await Promise.all([
+        session.call(a),
+        session.call(b),
+      ])
       expect(fetch1).toHaveBeenCalledOnce()
       expect(fetch2).toHaveBeenCalledOnce()
       expect(a.token).toBe('TOK1')

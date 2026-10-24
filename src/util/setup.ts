@@ -40,9 +40,13 @@ export default function setup(config: any): object {
   // A brand-specific api key wins over the country-code defaults — the api
   // rejects requests where the key doesn't match the announced branding
   const DEFAULT_API_KEY = (brand && API_KEYS[brand as Brand])
-    ?? (countryCode === 'US' ? DEFAULT_API_KEY_US : DEFAULT_API_KEY_NON_US)
+    ?? (countryCode === 'US'
+      ? DEFAULT_API_KEY_US
+      : DEFAULT_API_KEY_NON_US)
   const DEFAULT_PN_SUB_KEY = (brand && PUBNUB_TOKENS[brand as Brand]?.subscribe)
-    || (countryCode === 'US' ? DEFAULT_PN_SUB_KEY_US : DEFAULT_PN_SUB_KEY_NON_US)
+    || (countryCode === 'US'
+      ? DEFAULT_PN_SUB_KEY_US
+      : DEFAULT_PN_SUB_KEY_NON_US)
 
   const apiKey = config.apiKey ?? AUGUST_API_KEY ?? DEFAULT_API_KEY
   const pnSubKey = config.pnSubKey ?? AUGUST_PN_SUB_KEY ?? DEFAULT_PN_SUB_KEY
@@ -77,6 +81,16 @@ export default function setup(config: any): object {
   } else {
     // brand must survive setup — index.ts picks the API base URL from it,
     // so dropping it here silently sent every brand to the August servers
-    return { apiKey, pnSubKey, installId, idType, augustId, password, countryCode, timeout, brand }
+    return {
+      apiKey,
+      pnSubKey,
+      installId,
+      idType,
+      augustId,
+      password,
+      countryCode,
+      timeout,
+      brand,
+    }
   }
 }
