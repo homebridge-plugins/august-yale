@@ -60,7 +60,7 @@
     "@antfu/eslint-config": "^10.0.0",
     "@types/node": "^26.6.6",
     "@vitest/coverage-v8": "^5.0.5",
-    "eslint": "^10.13.0",
+    "eslint": "^10.14.0",
     "eslint-plugin-format": "^2.0.1",
     "typedoc": "^0.28.20",
     "typescript": "^6.0.3",
