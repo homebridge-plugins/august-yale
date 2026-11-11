@@ -78,7 +78,9 @@ async function setAlarmState(this: any, keepSession: boolean, alarmId: string, a
       return undefined
     }
 
-    const data = areaIds ? { areaIDs: areaIds } : {}
+    const data = areaIds
+      ? { areaIDs: areaIds }
+      : {}
     const response = await this.put(`/alarms/${alarmId}/state/${armState}`, data)
     return response?.body
   } catch (error) {

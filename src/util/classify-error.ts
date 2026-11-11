@@ -133,8 +133,12 @@ interface ErrorMatch {
  */
 function findTransportError(e: unknown): ErrorMatch | null {
   for (const err of flattenCauseChain(e)) {
-    const code: string | undefined = typeof err?.code === 'string' ? err.code : undefined
-    const name: string | undefined = typeof err?.name === 'string' ? err.name : undefined
+    const code: string | undefined = typeof err?.code === 'string'
+      ? err.code
+      : undefined
+    const name: string | undefined = typeof err?.name === 'string'
+      ? err.name
+      : undefined
 
     // Lifecycle: aborted / destroyed / closed.
     if (code && UNDICI_LIFECYCLE_CODES.has(code)) {
@@ -188,8 +192,12 @@ export function classifyTransportError(e: unknown): NetworkError | AbortedError 
   if (!found) {
     return null
   }
-  const original = e instanceof Error ? e : new Error(String(e))
-  const code: string | undefined = typeof found.match?.code === 'string' ? found.match.code : undefined
+  const original = e instanceof Error
+    ? e
+    : new Error(String(e))
+  const code: string | undefined = typeof found.match?.code === 'string'
+    ? found.match.code
+    : undefined
   const detail = found.match?.message ?? original.message ?? 'transport error'
 
   switch (found.kind) {

@@ -14,9 +14,25 @@ function setOutput(name, value) {
 }
 
 function resolveFromLabels(labels) {
-  const majorLabels = new Set(['major', 'semver:major', 'release:major', 'breaking', 'breaking-change'])
-  const minorLabels = new Set(['minor', 'semver:minor', 'release:minor', 'feature'])
-  const patchLabels = new Set(['patch', 'semver:patch', 'release:patch', 'fix'])
+  const majorLabels = new Set([
+    'major',
+    'semver:major',
+    'release:major',
+    'breaking',
+    'breaking-change',
+  ])
+  const minorLabels = new Set([
+    'minor',
+    'semver:minor',
+    'release:minor',
+    'feature',
+  ])
+  const patchLabels = new Set([
+    'patch',
+    'semver:patch',
+    'release:patch',
+    'fix',
+  ])
 
   if (labels.some(label => majorLabels.has(label))) { return 'major' }
   if (labels.some(label => minorLabels.has(label))) { return 'minor' }
@@ -52,7 +68,9 @@ function listPrsForCommit(owner, repo, sha, token) {
           }
           try {
             const parsed = JSON.parse(body)
-            resolve(Array.isArray(parsed) ? parsed : [])
+            resolve(Array.isArray(parsed)
+              ? parsed
+              : [])
           } catch (error) {
             reject(new Error(`Failed to parse GitHub API response: ${error.message}`))
           }
@@ -100,7 +118,9 @@ async function main() {
     }
 
     const labels = (pr.labels || [])
-      .map(label => (typeof label === 'string' ? label : label.name || ''))
+      .map(label => (typeof label === 'string'
+        ? label
+        : label.name || ''))
       .map(label => label.toLowerCase())
 
     const bump = resolveFromLabels(labels)

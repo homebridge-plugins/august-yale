@@ -12,9 +12,13 @@ function normalizeChangelogHeader(content) {
   }
 
   const nextSectionStart = content.indexOf('\n## ', headerStart + 1)
-  const headerBlock = (nextSectionStart === -1 ? content.slice(headerStart) : content.slice(headerStart, nextSectionStart)).trim()
+  const headerBlock = (nextSectionStart === -1
+    ? content.slice(headerStart)
+    : content.slice(headerStart, nextSectionStart)).trim()
   const prependedEntries = content.slice(0, headerStart).trim()
-  const remainingEntries = (nextSectionStart === -1 ? '' : content.slice(nextSectionStart)).trim()
+  const remainingEntries = (nextSectionStart === -1
+    ? ''
+    : content.slice(nextSectionStart)).trim()
 
   return `${[headerBlock, prependedEntries, remainingEntries].filter(Boolean).join('\n\n')}\n`
 }
@@ -22,7 +26,9 @@ function normalizeChangelogHeader(content) {
 function getRepoUrl() {
   try {
     const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'))
-    let url = (typeof pkg.repository === 'string' ? pkg.repository : pkg.repository?.url) || ''
+    let url = (typeof pkg.repository === 'string'
+      ? pkg.repository
+      : pkg.repository?.url) || ''
     url = url.replace(/^git\+/, '').replace(/\.git$/, '')
     if (url.startsWith('https://')) { return url }
   } catch {}
@@ -53,7 +59,9 @@ function appendFullChangelogLink(content, currentTag, repoUrl) {
   const firstSectionStart = content.indexOf('\n## ')
   if (firstSectionStart === -1) { return content }
   const firstSectionEnd = content.indexOf('\n## ', firstSectionStart + 1)
-  const firstSection = firstSectionEnd === -1 ? content.slice(firstSectionStart) : content.slice(firstSectionStart, firstSectionEnd)
+  const firstSection = firstSectionEnd === -1
+    ? content.slice(firstSectionStart)
+    : content.slice(firstSectionStart, firstSectionEnd)
 
   // Skip if a Full Changelog link is already present in that section
   if (firstSection.includes(prefix)) { return content }

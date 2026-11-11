@@ -31,7 +31,9 @@ function inc(v, level) {
 function latestStable(name) {
   try {
     const versions = JSON.parse(child.execSync(`npm info ${name} versions --json`).toString('utf8').trim())
-    const stable = (Array.isArray(versions) ? versions : [])
+    const stable = (Array.isArray(versions)
+      ? versions
+      : [])
       .filter(v => /^\d+\.\d+\.\d+(?:-[0-9A-Z-.]+)?(?:\+[0-9A-Z-.]+)?$/i.test(v) && !v.includes('-'))
     stable.sort((a, b) => {
       const ap = a.split('.').map(Number)

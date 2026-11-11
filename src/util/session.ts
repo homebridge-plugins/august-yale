@@ -37,7 +37,12 @@ export default async function session(this: any): Promise<object> {
 
     let inflight = inflightSessionRequests.get(this)
     if (!inflight) {
-      inflight = this.fetch({ method: 'post', url: 'session', headers, data })
+      inflight = this.fetch({
+        method: 'post',
+        url: 'session',
+        headers,
+        data,
+      })
       inflightSessionRequests.set(this, inflight!)
     }
 

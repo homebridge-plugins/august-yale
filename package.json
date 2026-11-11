@@ -53,17 +53,17 @@
     "docs:lint": "typedoc --emit none --treatWarningsAsErrors"
   },
   "dependencies": {
-    "pubnub": "^13.1.2",
-    "undici": "^8.12.2"
+    "pubnub": "^13.1.3",
+    "undici": "^8.12.4"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^9.5.1",
-    "@types/node": "^26.6.5",
-    "@vitest/coverage-v8": "^5.0.5",
-    "eslint": "^10.13.0",
+    "@antfu/eslint-config": "^10.0.0",
+    "@types/node": "^26.6.6",
+    "@vitest/coverage-v8": "^5.1.0",
+    "eslint": "^10.14.0",
     "eslint-plugin-format": "^2.0.1",
     "typedoc": "^0.28.20",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.5"
+    "vitest": "^5.1.0"
   }
 }

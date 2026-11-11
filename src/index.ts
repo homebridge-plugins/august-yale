@@ -144,7 +144,9 @@ class August {
       // We classify this as our own TimeoutError so consumers don't have
       // to special-case DOMException semantics.
       if (e instanceof DOMException && e.name === 'TimeoutError') {
-        throw new TimeoutError(`Request timed out after ${timeoutMs}ms`, e instanceof Error ? e : undefined)
+        throw new TimeoutError(`Request timed out after ${timeoutMs}ms`, e instanceof Error
+          ? e
+          : undefined)
       }
       // Classify other transport-level failures into NetworkError /
       // TimeoutError / AbortedError. The original error is preserved on
